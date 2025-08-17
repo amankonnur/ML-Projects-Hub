@@ -1,18 +1,45 @@
 from sklearn.datasets import fetch_openml
 from sklearn import linear_model
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score,f1_score,confusion_matrix
+from sklearn.metrics import mean_squared_error, r2_score
 from matplotlib import pyplot as plt
 
 boston = fetch_openml(name="boston", version=1, as_frame=True)
 X, y = boston.data, boston.target
 
-# print(X.shape,y.shape)
-plt.scatter(X["RM"], y, alpha=0.7)
-# plt.scatter(X,y)
-plt.show()
+# convert to numeric numpy arrays
+X = X.astype(float).values
+y = y.astype(float).values
+
+# train test split
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=42)
+
+#algorithm
+l_reg = linear_model.LinearRegression()
 
 
+# # print(X.shape,y.shape)
+# plt.scatter(X["RM"], y, alpha=0.7)
+# # plt.scatter(X,y)
+# plt.show()
+
+
+# train then model by fitting the data
+model = l_reg.fit(X_train,y_train)
+
+# predict the data
+predictions = model.predict(X_test)
+
+print([i for i in y_test])
+print([p for p in predictions])
+
+# evaluation
+print("Mean Squared Error:", mean_squared_error(y_test, predictions))
+print("R2 Score:", r2_score(y_test, predictions))
+
+
+# print("Actual values:", list(y_test[:10]))
+# print("Predicted values:", list(predictions[:10]))
 
 """
 CRIM → per capita crime rate by town
