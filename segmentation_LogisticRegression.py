@@ -1,6 +1,6 @@
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score,classification_report
 import pandas as pd
 
 df = pd.read_csv("customer_data.csv")
@@ -21,4 +21,6 @@ for i in Y_test:
 # print("Actual : ",Y_test)
 print("Predictions : ",predictions)
 print("Accuracy : ",accuracy_score(Y_test,predictions))
+print("Classification Report : ")
+print(classification_report(Y_test,predictions))
 print("Probabilities : ",probabilites)
